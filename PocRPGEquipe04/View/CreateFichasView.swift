@@ -82,9 +82,12 @@ struct CreateFichasView: View {
                     .foregroundStyle(Color(.white))
                     
                     Button {
-                        if($nome.wrappedValue != "" && $lore.wrappedValue != "" && $raça.wrappedValue != "" && $classe.wrappedValue != ""){
+                        if($nome.wrappedValue != "" && $lore.wrappedValue != "" && $raça.wrappedValue != "" && $classe.wrappedValue != "")
+                        {
+                            
                             fichasview.addFicha(FichaModel(nome: $nome.wrappedValue, lore: $lore.wrappedValue, classe: $classe.wrappedValue, raça: $raça.wrappedValue,
                                                            equipamentos: []))
+                            
                             Verfichas.toggle()
                             verForm.toggle()
                         }

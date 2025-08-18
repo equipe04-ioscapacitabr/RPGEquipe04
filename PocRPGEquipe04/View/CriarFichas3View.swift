@@ -1,6 +1,13 @@
+//
+//  CriarFichas3View.swift
+//  PocRPGEquipe04
+//
+//  Created by iredefbmac_18 on 18/08/25.
+//
+
 import SwiftUI
 
-struct CriarFichaView: View {
+struct CriarFichas3View: View {
     @State private var nome: String = ""
     @State private var raça: String = ""
     @State private var classe: String = ""
@@ -10,20 +17,20 @@ struct CriarFichaView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 16) {
                 
-                // Indicador de etapas
+                
                 HStack(spacing: 0) {
-                    StepCircle(systemImage: "doc.text", active: true)
-                    StepLine()
-                    StepCircle(systemImage: "gift", active: false)
-                    StepLine()
-                    StepCircle(systemImage: "eye", active: false)
-                    StepLine()
+                    StepCircle(systemImage: "doc", active: true)
+                    StepLine(active: true)
+                    StepCircle(systemImage: "gift", active: true)
+                    StepLine(active: true)
+                    StepCircle(systemImage: "eye", active: true)
+                    StepLine(active: false)
                     StepCircle(systemImage: "book", active: false)
                 }
                 .padding(.top, 10)
                 
                 
-                // Título "Itens"
+                
                 Text("Informações básicas")
                     .font(.headline)
                     .foregroundColor(.white)
@@ -73,7 +80,6 @@ struct CriarFichaView: View {
                 Spacer()
             }
             .padding()
-            .background(.backgroud)
             .navigationBarTitle("Criar ficha", displayMode: .inline)
             .navigationBarItems(
                 leading: Button("Voltar") {
@@ -88,34 +94,9 @@ struct CriarFichaView: View {
         }
         .preferredColorScheme(.dark)
     }
+
 }
 
-// Componente do círculo da etapa
-struct StepCircle: View {
-    var systemImage: String
-    var active: Bool
-    
-    var body: some View {
-        Image(systemName: systemImage)
-            .foregroundColor(.black)
-            .font(.system(size: 20, weight: .bold))
-            .padding(10)
-            .background(active ? Color.blue : Color.gray.opacity(0.4))
-            .clipShape(Circle())
-    }
+#Preview {
+    CriarFichas3View()
 }
-
-struct StepLine: View {
-    var body: some View {
-        Rectangle()
-            .fill(Color.gray)
-            .frame(width: 60, height: 2)
-    }
-}
-
-struct CriarFichaView_Previews: PreviewProvider {
-    static var previews: some View {
-        CriarFichaView()
-    }
-}
-

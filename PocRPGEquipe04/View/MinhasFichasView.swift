@@ -18,54 +18,56 @@ struct MinhasFichasView: View {
     ]
     
     var body: some View {
-        ZStack(alignment: .top) {
-            Color.pretoBackground
-                .ignoresSafeArea(.all)
-            
-            VStack(spacing: 70) {
+        NavigationStack {
+            ZStack(alignment: .top) {
+                Color.pretoBackground
+                    .ignoresSafeArea(.all)
                 
-                VStack {
-                ZStack {
-                    HStack {
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            
-                        }, label: {
-                            HStack(spacing: 2) {
-                                Text("Criar")
-                                    .fontWeight(.semibold)
+                VStack(spacing: 70) {
+                    
+                    VStack {
+                        ZStack {
+                            HStack {
                                 
-                                Image(systemName: "plus.app")
-                                    .fontWeight(.semibold)
+                                Spacer()
+                                
+                                
+                                
+                                NavigationLink(destination: CriarFicha1View()) {
+                                    Text("Criar")
+                                        .fontWeight(.semibold)
+                                    
+                                    Image(systemName: "plus.app")
+                                        .fontWeight(.semibold)
+                                }
+                                
+                                
                             }
-                        })
-                    }
-                    
-                    Text("Minhas fichas")
-                        .foregroundStyle(Color.white)
-                        .font(.custom("Viga", size: 24))
-                }
-                
-                Rectangle()
-                    .foregroundStyle(Color.white)
-                    .frame(height: 1)
-                
-            }
-                
-                ScrollView(.vertical) {
-                    
-                    VStack(spacing: 50) {
-                        ForEach(vetorFichas) { ficha in
-                            CardFicha(fichaRecebida: ficha)
+                            
+                            Text("Minhas fichas")
+                                .foregroundStyle(Color.white)
+                                .font(.custom("Viga", size: 24))
                         }
+                        
+                        Rectangle()
+                            .foregroundStyle(Color.white)
+                            .frame(height: 1)
+                        
+                    }
+                    
+                    ScrollView(.vertical) {
+                        
+                        VStack(spacing: 50) {
+                            ForEach(vetorFichas) { ficha in
+                                CardFicha(fichaRecebida: ficha)
+                            }
+                        }
+                        
                     }
                     
                 }
-                
+                .padding()
             }
-            .padding()
         }
     }
 }

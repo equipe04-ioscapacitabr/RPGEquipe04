@@ -12,8 +12,8 @@ struct CriarFichas2View: View {
     @State private var itens: [String] = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 16) {
+        VStack {
+            VStack(alignment: .center, spacing: 16) {
                 
                 
                 HStack(spacing: 0) {
@@ -27,60 +27,62 @@ struct CriarFichas2View: View {
                 .padding(.top, 10)
                 
                 
-                
-                Text("Itens")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                
-                HStack {
-                    TextField("Nome do item", text: $nomeItem)
-                        .padding(13)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(8)
+                VStack(alignment: .leading, spacing: 16){
+                    Text("Itens")
+                        .font(.headline)
                         .foregroundColor(.white)
-                    
-                    Button(action: {
-                        if !nomeItem.isEmpty {
-                            itens.append(nomeItem)
-                            nomeItem = ""
-                        }
-                    }) {
-                        Image(systemName: "plus")
+                    HStack {
+                        TextField("Nome do item", text: $nomeItem)
+                            .padding(13)
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(8)
                             .foregroundColor(.white)
-                            .padding(8)
-                            .background(Color.blue)
-                            .clipShape(Circle())
-                    }
-                }
-                
-                Spacer()
-                
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 8) {
-                        ForEach(itens, id: \.self) { item in
-                            Text(item)
-                                .padding()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .background(Color.gray.opacity(0.3))
-                                .cornerRadius(8)
+                        
+                        Button(action: {
+                            if !nomeItem.isEmpty {
+                                itens.append(nomeItem)
+                                nomeItem = ""
+                            }
+                        }) {
+                            Image(systemName: "plus")
                                 .foregroundColor(.white)
+                                .padding(8)
+                                .background(Color.blue)
+                                .clipShape(Circle())
+                        }
+                    }
+                    
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 8) {
+                            ForEach(itens, id: \.self) { item in
+                                Text(item)
+                                    .padding()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .background(Color.gray.opacity(0.3))
+                                    .cornerRadius(8)
+                                    .foregroundColor(.white)
+                            }
                         }
                     }
                 }
             }
-            .padding()
-            .navigationBarTitle("Criar ficha", displayMode: .inline)
-            .navigationBarItems(
-                leading: Button("Voltar") {
+                Spacer()
+            NavigationLink(destination: CriarFichas3View(), label: {
+                HStack {
+                    Spacer()
                     
+                    Text("Proximo")
+                        .font(.headline)
+                    
+                    Spacer()
                 }
-                .foregroundColor(.blue),
-                trailing: Button("Salvar") {
-                    print("Salvar ficha")
-                }
-                .foregroundColor(.blue)
-            )
+                .padding()
+                .background(Color.pink)
+                .cornerRadius(10)
+            })
+            .buttonStyle(PlainButtonStyle())
         }
+        .padding()
         .preferredColorScheme(.dark)
     }
 }

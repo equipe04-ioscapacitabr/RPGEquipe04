@@ -6,16 +6,15 @@
 //
 
 import SwiftUI
+import _PhotosUI_SwiftUI
 
 struct CriarFichas4View: View {
-    @State private var nome: String = ""
-    @State private var raça: String = ""
-    @State private var classe: String = ""
-    @State private var elemento: String = ""
+    @State private var avatar: PhotosPickerItem?
+    @State private var descricao: String = ""
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 16) {
+        VStack {
+            VStack(alignment: .center, spacing: 16) {
                 
                 
                 HStack(spacing: 0) {
@@ -29,70 +28,74 @@ struct CriarFichas4View: View {
                 }
                 .padding(.top, 10)
                 
-                
-                
-                Text("Informações básicas")
+            }
+            
+            
+            VStack(alignment: .leading, spacing: 16) {
+                Text("História")
                     .font(.headline)
                     .foregroundColor(.white)
-                
-                HStack {
-                    VStack {
+                    .padding(.top, 20)
+                    .padding(.bottom, 20)
+                HStack(alignment: .center) {
+                    VStack(alignment: .leading) {
+                        
                         HStack {
-                            Text("Nome")
-                                .padding(.trailing, 45)
-                            TextField("Nome do personagem", text: $nome)
+                            Text("Avatar")
+                                .padding(13)
+                                .padding(.trailing, 40)
+                            PhotosPicker("imagem do personagem", selection: $avatar)
+                                .padding(13)
+                                .padding(.leading, 0)
+                                .foregroundStyle(.blue)
+                            Image(systemName: "upload")
+                                .foregroundColor(.blue)
+                                .font(.system(size: 20, weight: .bold))
+                                .padding(10)
                         }
-                        .padding(13)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(8)
-                        .foregroundColor(.white)
-                        HStack {
-                            Text("Raça")
-                                .padding(.trailing, 55)
-                            TextField("Raça do personagem", text: $raça)
-                        }
-                        .padding(13)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(8)
-                        .foregroundColor(.white)
-                        HStack {
-                            Text("Classe")
-                                .padding(.trailing, 46)
-                            TextField("Classe do personagem", text: $classe)
-                        }
-                        .padding(13)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(8)
-                        .foregroundColor(.white)
-                        HStack {
-                            Text("Elemento")
-                                .padding(.trailing, 30)
-                            TextField("Elemento do personagem", text: $elemento)
-                        }
-                        .padding(13)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(8)
-                        .foregroundColor(.white)
+                        
+                        
+                        Text("Descrição")
+                            .padding(13)
+                        
+                        TextField("Descrição do personagem", text: $descricao)
+                            .padding()
+                            .padding(.bottom, 150)
                     }
                     
-                }
-                
-                Spacer()
-            }
-            .padding()
-            .navigationBarTitle("Criar ficha", displayMode: .inline)
-            .navigationBarItems(
-                leading: Button("Voltar") {
                     
+                    VStack (alignment: .trailing) {
+                        
+                        
+                    }
+                    
+                    .cornerRadius(30)
                 }
-                .foregroundColor(.blue),
-                trailing: Button("Salvar") {
-                    print("Salvar ficha")
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(15)
+                .foregroundColor(.white)
+            }
+            Spacer()
+            
+            NavigationLink(destination: MinhasFichasView(), label: {
+                HStack {
+                    Spacer()
+                    
+                    Text("Salvar")
+                        .font(.headline)
+                    
+                    Spacer()
                 }
-                .foregroundColor(.blue)
-            )
+                .padding()
+                .background(Color.blue)
+                .cornerRadius(10)
+            })
+            .buttonStyle(PlainButtonStyle())
         }
+        .padding()
         .preferredColorScheme(.dark)
+        
+        
     }
 }
 

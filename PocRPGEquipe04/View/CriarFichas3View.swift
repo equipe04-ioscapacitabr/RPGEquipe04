@@ -10,6 +10,7 @@ import SwiftUI
 struct CriarFichas3View: View {
     @State private var level: Int = 0
     @State private var vida: Int = 0
+    @State private var ataque: Int = 0
     @State private var mana: Int = 0
     @State private var velocidade: Int = 0
     @State private var defesa: Int = 0
@@ -46,6 +47,8 @@ struct CriarFichas3View: View {
                             Stepper("Level: \(level)", value: $level, in:0...100)
                                 .padding(7)
                             Stepper("Mana: \(mana)", value: $mana, in:0...100)
+                                .padding(7)
+                            Stepper("Ataque: \(ataque)", value: $ataque, in:0...100)
                                 .padding(7)
                             Stepper("Defesa: \(defesa)", value: $defesa, in:0...100)
                                 .padding(7)

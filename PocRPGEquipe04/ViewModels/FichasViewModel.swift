@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 class FichasViewModel {
     var fichas: [FichaModel] =  []
@@ -18,4 +19,5 @@ class FichasViewModel {
         self.fichas.append(ficha)
     }
 }
+
 

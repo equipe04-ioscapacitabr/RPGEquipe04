@@ -4,6 +4,7 @@
 //
 //  Created by iredefbmac_18 on 23/05/25
 import SwiftUI
+import SwiftData
 
 @main
 struct PocRPGEquipe04App: App {
@@ -12,4 +13,5 @@ struct PocRPGEquipe04App: App {
             CreateFichasView()
         }
     }
+    
 }

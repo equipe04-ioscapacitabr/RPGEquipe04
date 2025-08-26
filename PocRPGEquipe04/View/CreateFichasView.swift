@@ -8,28 +8,12 @@
 import SwiftUI
 
 struct CreateFichasView: View {
-    
-    let fichasview = FichasViewModel(fichas:
-                                        [FichaModel(nome: "Elfidio",
-                                                    lore: "Um principe elfo que quer decobrir o mundo",
-                                                    classe: "Mago",
-                                                    raça: "Elfo",
-                                                    equipamentos:["Cajado", "Mochila"]),
-                                         FichaModel(nome: "Brutos",
-                                                    lore: "Um classico cavaleiro em busca de sua glória",
-                                                    classe: "Guerreiro",
-                                                    raça: "Humano",
-                                                    equipamentos: ["Espada", "Escudo"])])
-    
-    @State var nome: String = ""
-    @State var lore: String = ""
-    @State var classe: String = ""
-    @State var raça: String = ""
-    @State var equipamentos: [String] = []
-    @State var Verfichas: Bool = false
-    @State var verForm: Bool = true
+
+     
     
     var body: some View {
+        Text("Criar Ficha")
+        /*
         ZStack{
             Color.backgroundRPG.edgesIgnoringSafeArea(.all)
             if (verForm){
@@ -131,7 +115,9 @@ struct CreateFichasView: View {
                 }
             }
         }
+         */
     }
+ 
 }
     
 #Preview{

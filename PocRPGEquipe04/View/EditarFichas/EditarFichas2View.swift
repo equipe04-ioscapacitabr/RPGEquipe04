@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct EditarFichas2View: View {
-    @Binding var ficha: FichaModel?
+    @State var ficha = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
+
     @State private var nomeItem: String = ""
     
     var body: some View {

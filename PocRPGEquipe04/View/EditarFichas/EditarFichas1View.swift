@@ -2,8 +2,7 @@ import SwiftUI
 
 struct EditarFicha1View: View {
     
-    @Binding var ficha: FichaModel?
-    
+    @State var ficha = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
     
     var body: some View {
         VStack {
@@ -65,7 +64,7 @@ struct EditarFicha1View: View {
             
             Spacer()
             
-            NavigationLink(destination: EditarFichas2View(ficha: $ficha), label: {
+            NavigationLink(destination: EditarFichas2View(), label: {
                 HStack {
                     Spacer()
                     

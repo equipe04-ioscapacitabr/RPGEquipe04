@@ -9,8 +9,11 @@ import SwiftUI
 import _PhotosUI_SwiftUI
 
 struct EditarFichas4View: View {
-    @Binding var ficha: FichaModel
+    @State var ficha = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
+    @State var avatarSelecionado: PhotosPickerItem?
     
+    
+    @ObservedObject var FichaViewModel = FichasViewModel.shared
     var body: some View {
         VStack {
             VStack(alignment: .center, spacing: 16) {
@@ -43,7 +46,7 @@ struct EditarFichas4View: View {
                             Text("Avatar")
                                 .padding(13)
                                 .padding(.trailing, 40)
-                            PhotosPicker("imagem do personagem", selection: $ficha.avatar)
+                            PhotosPicker("imagem do personagem", selection: $avatarSelecionado)
                                 .padding(13)
                                 .padding(.leading, 0)
                                 .foregroundStyle(.blue)
@@ -94,7 +97,16 @@ struct EditarFichas4View: View {
         .padding()
         .preferredColorScheme(.dark)
         .navigationTitle("Editar Ficha")
-        
+        .onChange(of: avatarSelecionado) { _, novoValor in
+            Task {
+                if let data = try? await novoValor?.loadTransferable(type: Data.self) {
+                    ficha.avatar = data
+                }
+            }
+        }
+        .onDisappear {
+            FichaViewModel.updateFicha(at: 1, ficha)
+        }
     }
 }
 

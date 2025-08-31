@@ -8,16 +8,29 @@
 import SwiftUI
 
 struct CardFicha: View {
-    @Binding var fichaRecebida: FichaModel
+    @State var fichaRecebida: FichaModel
     @State var InFicha: FichaModel?
     var body: some View {
         HStack(alignment: .top, spacing: 20) {
             // TODO: UTILIZAR FOTO DE VERDADE
                 
-                RoundedRectangle(cornerRadius: 10)
-                    .frame(width: 92, height: 92)
-                    .foregroundStyle(Color.gray)
                 
+                    
+            
+                if let data = fichaRecebida.avatar,
+                   let uiImage = UIImage(data: data) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 92, height: 92)
+                        .foregroundStyle(Color.gray)
+                        .cornerRadius(10)
+                } else {
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(width: 92, height: 92)
+                        .foregroundStyle(Color.gray)
+                }
+            
                 VStack(alignment: .leading, spacing: 18) {
                     HStack {
                         Text(fichaRecebida.nome)
@@ -26,7 +39,7 @@ struct CardFicha: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: EditarFicha1View(ficha: $fichaRecebida)) {
+                        NavigationLink(destination: EditarFicha1View()) {
                             Image(systemName: "pencil")
                         }
                         

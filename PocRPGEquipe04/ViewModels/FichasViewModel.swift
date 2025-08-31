@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-class FichasViewModel {
+class FichasViewModel: ObservableObject {
     @Published var fichas: [FichaModel] =  []
     
     static let shared = FichasViewModel()

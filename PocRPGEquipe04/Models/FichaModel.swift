@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import _PhotosUI_SwiftUI
 
 @Model
 class FichaModel: Identifiable {

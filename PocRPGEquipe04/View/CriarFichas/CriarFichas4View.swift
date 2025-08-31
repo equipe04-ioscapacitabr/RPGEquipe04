@@ -9,9 +9,10 @@ import SwiftUI
 import _PhotosUI_SwiftUI
 
 struct CriarFichas4View: View {
-    @State private var avatar: PhotosPickerItem?
+    @State private var avatar: Data?
+    @State private var avatarSelecionado: PhotosPickerItem?
     @State private var descricao: String = ""
-    
+    @ObservedObject var FichaViewModel = FichasViewModel.shared
     var body: some View {
         VStack {
             VStack(alignment: .center, spacing: 16) {
@@ -44,7 +45,7 @@ struct CriarFichas4View: View {
                             Text("Avatar")
                                 .padding(13)
                                 .padding(.trailing, 40)
-                            PhotosPicker("imagem do personagem", selection: $avatar)
+                            PhotosPicker("imagem do personagem", selection: $avatarSelecionado)
                                 .padding(13)
                                 .padding(.leading, 0)
                                 .foregroundStyle(.blue)
@@ -95,7 +96,13 @@ struct CriarFichas4View: View {
         .padding()
         .preferredColorScheme(.dark)
         .navigationTitle("Criar Ficha")
-        
+        .onChange(of: avatarSelecionado) { _, novoValor in
+            Task {
+                if let data = try? await novoValor?.loadTransferable(type: Data.self) {
+                    avatar = data
+                }
+            }
+        }
     }
 }
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditarFichas3View: View {
     
-    @State var ficha = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
+    @ObservedObject var fichaViewModel = FichasViewModel.shared
 
     var body: some View {
             VStack {
@@ -40,15 +40,15 @@ struct EditarFichas3View: View {
                     HStack(alignment: .center) {
                         
                         VStack (alignment: .trailing) {
-                            Stepper("Level: \(ficha.level)", value: $ficha.level, in:0...100)
+                            Stepper("Level: \(fichaViewModel.level)", value: $fichaViewModel.level, in:0...100)
                                 .padding(7)
-                            Stepper("Mana: \(ficha.mana)", value: $ficha.mana, in:0...100)
+                            Stepper("Mana: \(fichaViewModel.mana)", value: $fichaViewModel.mana, in:0...100)
                                 .padding(7)
-                            Stepper("Ataque: \(ficha.ataque)", value: $ficha.ataque, in:0...100)
+                            Stepper("Ataque: \(fichaViewModel.ataque)", value: $fichaViewModel.ataque, in:0...100)
                                 .padding(7)
-                            Stepper("Defesa: \(ficha.defesa)", value: $ficha.defesa, in:0...100)
+                            Stepper("Defesa: \(fichaViewModel.defesa)", value: $fichaViewModel.defesa, in:0...100)
                                 .padding(7)
-                            Stepper("Velocidade: \(ficha.velocidade)", value: $ficha.velocidade, in:0...100)
+                            Stepper("Velocidade: \(fichaViewModel.velocidade)", value: $fichaViewModel.velocidade, in:0...100)
                                 .padding(7)
                         }
                         .padding(.leading, 30)

@@ -39,7 +39,7 @@ struct CardFicha: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: EditarFicha1View()) {
+                        NavigationLink(destination: EditarFicha1View(ficha: $fichaRecebida)) {
                             Image(systemName: "pencil")
                         }
                         

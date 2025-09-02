@@ -2,7 +2,8 @@ import SwiftUI
 
 struct EditarFicha1View: View {
     
-    @State var ficha = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
+    @Binding var ficha: FichaModel
+    @ObservedObject var fichaViewModel = FichasViewModel.shared
     
     var body: some View {
         VStack {
@@ -44,13 +45,13 @@ struct EditarFicha1View: View {
                     
                     
                     VStack (alignment: .trailing) {
-                        TextField("Nome do personagem", text: $ficha.nome)
+                        TextField("Nome do personagem", text: $fichaViewModel.nome)
                             .padding(13)
-                        TextField("Raça do personagem", text: $ficha.raça)
+                        TextField("Raça do personagem", text: $fichaViewModel.raça)
                             .padding(13)
-                        TextField("Classe do personagem", text: $ficha.classe)
+                        TextField("Classe do personagem", text: $fichaViewModel.classe)
                             .padding(13)
-                        TextField("Elemento do personagem", text: $ficha.elemento)
+                        TextField("Elemento do personagem", text: $fichaViewModel.elemento)
                             .padding(13)
                     }
                     .padding(.leading, 30)
@@ -82,12 +83,15 @@ struct EditarFicha1View: View {
         .padding()
         .preferredColorScheme(.dark)
         .navigationTitle("Editar Ficha")
-        
+        .onAppear {
+            fichaViewModel.filltoEdit(ficha: ficha)
+        }
     }
 }
 
 struct EditarFichaView_Previews: PreviewProvider {
+    @State static var fichapreview = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
     static var previews: some View {
-        EditarFicha1View()
+        EditarFicha1View(ficha: $fichapreview)
     }
 }

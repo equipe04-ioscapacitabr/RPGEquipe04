@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CriarFichas2View: View {
     @State private var nomeItem: String = ""
-    @State private var itens: [String] = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
+    @ObservedObject var fichaViewModel = FichasViewModel.shared
     
     var body: some View {
         VStack {
@@ -40,7 +40,7 @@ struct CriarFichas2View: View {
                         
                         Button(action: {
                             if !nomeItem.isEmpty {
-                                itens.append(nomeItem)
+                                fichaViewModel.itens.append(nomeItem)
                                 nomeItem = ""
                             }
                         }) {
@@ -54,7 +54,7 @@ struct CriarFichas2View: View {
                     
                     ScrollView {
                         VStack(alignment: .leading, spacing: 8) {
-                            ForEach(itens, id: \.self) { item in
+                            ForEach(fichaViewModel.itens, id: \.self) { item in
                                 Text(item)
                                     .padding()
                                     .frame(maxWidth: .infinity, alignment: .leading)

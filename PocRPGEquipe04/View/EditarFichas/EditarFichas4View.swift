@@ -9,7 +9,7 @@ import SwiftUI
 import _PhotosUI_SwiftUI
 
 struct EditarFichas4View: View {
-    @State var ficha = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
+    @ObservedObject var fichaViewModel = FichasViewModel.shared
     @State var avatarSelecionado: PhotosPickerItem?
     
     
@@ -60,7 +60,7 @@ struct EditarFichas4View: View {
                         Text("Descrição")
                             .padding(13)
                         
-                        TextField("Descrição do personagem", text: $ficha.descricao)
+                        TextField("Descrição do personagem", text: $fichaViewModel.descricao)
                             .padding()
                             .padding(.bottom, 150)
                     }
@@ -100,12 +100,12 @@ struct EditarFichas4View: View {
         .onChange(of: avatarSelecionado) { _, novoValor in
             Task {
                 if let data = try? await novoValor?.loadTransferable(type: Data.self) {
-                    ficha.avatar = data
+                    fichaViewModel.avatar = data
                 }
             }
         }
         .onDisappear {
-            FichaViewModel.updateFicha(at: 1, ficha)
+            FichaViewModel.updateFicha(at: 1)
         }
     }
 }

@@ -10,7 +10,8 @@ import SwiftData
 struct PocRPGEquipe04App: App {
     var body: some Scene {
         WindowGroup {
-            CreateFichasView()
+            MinhasFichasView()
+                .modelContainer(for: FichaModel.self)
         }
     }
     

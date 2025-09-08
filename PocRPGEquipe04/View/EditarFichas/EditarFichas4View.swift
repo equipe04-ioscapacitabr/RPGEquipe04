@@ -9,11 +9,11 @@ import SwiftUI
 import _PhotosUI_SwiftUI
 
 struct EditarFichas4View: View {
-    @State var ficha = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
-    @State var avatarSelecionado: PhotosPickerItem?
+    @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
+    @State private var avatarSelecionado: PhotosPickerItem?
+    @ObservedObject var fichaViewModel = FichasViewModel.shared
     
-    
-    @ObservedObject var FichaViewModel = FichasViewModel.shared
     var body: some View {
         VStack {
             VStack(alignment: .center, spacing: 16) {
@@ -31,9 +31,8 @@ struct EditarFichas4View: View {
                 .padding(.top, 10)
                 
             }
-            
-            
-            VStack(alignment: .leading, spacing: 16) {
+
+            VStack(alignment: .leading, spacing: 16){
                 Text("História")
                     .font(.headline)
                     .foregroundColor(.white)
@@ -60,7 +59,7 @@ struct EditarFichas4View: View {
                         Text("Descrição")
                             .padding(13)
                         
-                        TextField("Descrição do personagem", text: $ficha.descricao)
+                        TextField("Descrição do personagem", text: $fichaViewModel.descricao)
                             .padding()
                             .padding(.bottom, 150)
                     }
@@ -78,35 +77,41 @@ struct EditarFichas4View: View {
                 .foregroundColor(.white)
             }
             Spacer()
-            
+
             NavigationLink(destination: MinhasFichasView(), label: {
                 HStack {
-                    Spacer()
                     
-                    Text("Salvar")
-                        .font(.headline)
                     
-                    Spacer()
-                }
+                    Button(action: {
+                        fichaViewModel.updateFicha(context: context)
+                        fichaViewModel.clearFicha()
+                        fichaViewModel.getAllFichas(context: context)
+                        dismiss()
+                    }) {
+                        Spacer()
+                        Text("Salvar")
+                            .font(.headline)
+                        Spacer()
+                    }
                 .padding()
                 .background(Color.blue)
                 .cornerRadius(10)
+                
+            }
             })
             .buttonStyle(PlainButtonStyle())
+               
         }
         .padding()
-        .preferredColorScheme(.dark)
-        .navigationTitle("Editar Ficha")
         .onChange(of: avatarSelecionado) { _, novoValor in
             Task {
                 if let data = try? await novoValor?.loadTransferable(type: Data.self) {
-                    ficha.avatar = data
+                    fichaViewModel.avatar = data
                 }
             }
         }
-        .onDisappear {
-            FichaViewModel.updateFicha(at: 1, ficha)
-        }
+        .preferredColorScheme(.dark)        .navigationTitle("Editar Ficha")
+               
     }
 }
 

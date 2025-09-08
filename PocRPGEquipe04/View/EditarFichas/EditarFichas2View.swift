@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct EditarFichas2View: View {
-    @State var ficha = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
-
+    @ObservedObject var fichaViewModel = FichasViewModel.shared
     @State private var nomeItem: String = ""
     
     var body: some View {
@@ -41,7 +40,7 @@ struct EditarFichas2View: View {
                         
                         Button(action: {
                             if !nomeItem.isEmpty {
-                                ficha.itens.append(nomeItem)
+                                fichaViewModel.itens.append(nomeItem)
                                 nomeItem = ""
                             }
                         }) {
@@ -55,7 +54,7 @@ struct EditarFichas2View: View {
                     
                     ScrollView {
                         VStack(alignment: .leading, spacing: 8) {
-                            ForEach(ficha.itens, id: \.self) { item in
+                            ForEach(fichaViewModel.itens, id: \.self) { item in
                                 Text(item)
                                     .padding()
                                     .frame(maxWidth: .infinity, alignment: .leading)

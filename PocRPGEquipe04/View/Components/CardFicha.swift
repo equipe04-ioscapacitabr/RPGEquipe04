@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CardFicha: View {
+    @Environment(\.modelContext) var context
+    @ObservedObject var fichaViewModel = FichasViewModel.shared
     @State var fichaRecebida: FichaModel
     @State var InFicha: FichaModel?
     var body: some View {
@@ -39,12 +41,12 @@ struct CardFicha: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: EditarFicha1View()) {
+                        NavigationLink(destination: EditarFicha1View(ficha: $fichaRecebida)) {
                             Image(systemName: "pencil")
                         }
                         
                         Button(action: {
-                            
+                            fichaViewModel.removeFicha(ficha: fichaRecebida, context: context)
                         },label: {
                             
                             Image(systemName: "trash")
@@ -61,7 +63,7 @@ struct CardFicha: View {
                         
                         
                         VStack(alignment: .leading) {
-                            Text("Raça: \(fichaRecebida.raça)")
+                            Text("Raça: \(fichaRecebida.raca)")
                             Text("Elemento: \(fichaRecebida.elemento)")
                             
                         }
@@ -90,6 +92,6 @@ struct CardFicha: View {
 }
 
 #Preview {
-    CardFicha(fichaRecebida: FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0))
+    CardFicha(fichaRecebida: FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raca: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0))
         .padding(.horizontal, 40)
 }

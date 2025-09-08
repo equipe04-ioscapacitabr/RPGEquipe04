@@ -9,10 +9,11 @@ import SwiftUI
 import _PhotosUI_SwiftUI
 
 struct CriarFichas4View: View {
-    @State private var avatar: Data?
+    @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
     @State private var avatarSelecionado: PhotosPickerItem?
-    @State private var descricao: String = ""
-    @ObservedObject var FichaViewModel = FichasViewModel.shared
+    @ObservedObject var fichaViewModel = FichasViewModel.shared
+    
     var body: some View {
         VStack {
             VStack(alignment: .center, spacing: 16) {
@@ -49,17 +50,13 @@ struct CriarFichas4View: View {
                                 .padding(13)
                                 .padding(.leading, 0)
                                 .foregroundStyle(.blue)
-                            Image(systemName: "upload")
-                                .foregroundColor(.blue)
-                                .font(.system(size: 20, weight: .bold))
-                                .padding(10)
                         }
                         
                         
                         Text("Descrição")
                             .padding(13)
                         
-                        TextField("Descrição do personagem", text: $descricao)
+                        TextField("Descrição do personagem", text: $fichaViewModel.descricao)
                             .padding()
                             .padding(.bottom, 150)
                     }
@@ -81,16 +78,22 @@ struct CriarFichas4View: View {
             NavigationLink(destination: MinhasFichasView(), label: {
                 HStack {
                     Spacer()
-                    
                     Text("Salvar")
                         .font(.headline)
-                    
                     Spacer()
+                    
                 }
                 .padding()
                 .background(Color.blue)
                 .cornerRadius(10)
+                
             })
+            .onTapGesture {
+                
+                fichaViewModel.addFicha(context: context)
+                fichaViewModel.clearFicha()
+                fichaViewModel.getAllFichas(context: context)
+            }
             .buttonStyle(PlainButtonStyle())
         }
         .padding()
@@ -99,7 +102,7 @@ struct CriarFichas4View: View {
         .onChange(of: avatarSelecionado) { _, novoValor in
             Task {
                 if let data = try? await novoValor?.loadTransferable(type: Data.self) {
-                    avatar = data
+                    fichaViewModel.avatar = data
                 }
             }
         }

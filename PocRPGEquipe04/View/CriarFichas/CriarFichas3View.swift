@@ -8,12 +8,7 @@
 import SwiftUI
 
 struct CriarFichas3View: View {
-    @State private var level: Int = 0
-    @State private var vida: Int = 0
-    @State private var ataque: Int = 0
-    @State private var mana: Int = 0
-    @State private var velocidade: Int = 0
-    @State private var defesa: Int = 0
+    @ObservedObject var fichaViewModel = FichasViewModel.shared
     
     var body: some View {
             VStack {
@@ -44,15 +39,15 @@ struct CriarFichas3View: View {
                     HStack(alignment: .center) {
                         
                         VStack (alignment: .trailing) {
-                            Stepper("Level: \(level)", value: $level, in:0...100)
+                            Stepper("Level: \(fichaViewModel.level)", value: $fichaViewModel.level, in:0...100)
                                 .padding(7)
-                            Stepper("Mana: \(mana)", value: $mana, in:0...100)
+                            Stepper("Mana: \(fichaViewModel.mana)", value: $fichaViewModel.mana, in:0...100)
                                 .padding(7)
-                            Stepper("Ataque: \(ataque)", value: $ataque, in:0...100)
+                            Stepper("Ataque: \(fichaViewModel.ataque)", value: $fichaViewModel.ataque, in:0...100)
                                 .padding(7)
-                            Stepper("Defesa: \(defesa)", value: $defesa, in:0...100)
+                            Stepper("Defesa: \(fichaViewModel.defesa)", value: $fichaViewModel.defesa, in:0...100)
                                 .padding(7)
-                            Stepper("Velocidade: \(velocidade)", value: $velocidade, in:0...100)
+                            Stepper("Velocidade: \(fichaViewModel.velocidade)", value: $fichaViewModel.velocidade, in:0...100)
                                 .padding(7)
                         }
                         .padding(.leading, 30)

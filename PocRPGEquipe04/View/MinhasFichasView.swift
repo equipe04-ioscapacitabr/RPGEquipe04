@@ -6,16 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MinhasFichasView: View {
-    
-    // FICHAS PARA TESTE
-    
-    let vetorFichas: [FichaModel] = [
-        FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0),
-        FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0),
-        FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
-    ]
+    @StateObject var fichaViewModel = FichasViewModel.shared
+    @Environment(\.modelContext) var context
     
     var body: some View {
         NavigationStack {
@@ -58,7 +53,7 @@ struct MinhasFichasView: View {
                     ScrollView(.vertical) {
                         
                         VStack(spacing: 50) {
-                            ForEach(vetorFichas) { ficha in
+                            ForEach(fichaViewModel.fichas, id: \.id) { ficha in
                                 CardFicha(fichaRecebida: ficha)
                             }
                         }
@@ -68,8 +63,11 @@ struct MinhasFichasView: View {
                 }
                 .padding()
             }
+            
         }
-        
+        .onAppear {
+            fichaViewModel.getAllFichas(context: context)
+        }
     }
         
 }

@@ -23,7 +23,7 @@ struct FichaDetailView: View {
                     VStack(alignment: .leading){
                         Text("Nome: \(ficha.nome)")
                         Text("Classe: \(ficha.classe)")
-                        Text("Raça: \(ficha.raça)")
+                        Text("Raça: \(ficha.raca)")
                         Text("Elemento: \(ficha.elemento)")
                     }
                     .padding()
@@ -88,5 +88,5 @@ struct FichaDetailView: View {
 }
 
 #Preview {
-    FichaDetailView(ficha: FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0))
+    FichaDetailView(ficha: FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raca: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0))
 }

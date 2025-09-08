@@ -1,10 +1,7 @@
 import SwiftUI
 
 struct CriarFicha1View: View {
-    @State private var nome: String = ""
-    @State private var raça: String = ""
-    @State private var classe: String = ""
-    @State private var elemento: String = ""
+    @ObservedObject var fichaViewModel = FichasViewModel.shared
     
     var body: some View {
         VStack {
@@ -46,13 +43,13 @@ struct CriarFicha1View: View {
                     
                     
                     VStack (alignment: .trailing) {
-                        TextField("Nome do personagem", text: $nome)
+                        TextField("Nome do personagem", text: $fichaViewModel.nome)
                             .padding(13)
-                        TextField("Raça do personagem", text: $raça)
+                        TextField("Raça do personagem", text: $fichaViewModel.raca)
                             .padding(13)
-                        TextField("Classe do personagem", text: $classe)
+                        TextField("Classe do personagem", text: $fichaViewModel.classe)
                             .padding(13)
-                        TextField("Elemento do personagem", text: $elemento)
+                        TextField("Elemento do personagem", text: $fichaViewModel.elemento)
                             .padding(13)
                     }
                     .padding(.leading, 30)

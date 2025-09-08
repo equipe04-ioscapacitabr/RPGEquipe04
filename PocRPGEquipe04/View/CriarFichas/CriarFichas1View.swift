@@ -45,7 +45,7 @@ struct CriarFicha1View: View {
                     VStack (alignment: .trailing) {
                         TextField("Nome do personagem", text: $fichaViewModel.nome)
                             .padding(13)
-                        TextField("Raça do personagem", text: $fichaViewModel.raça)
+                        TextField("Raça do personagem", text: $fichaViewModel.raca)
                             .padding(13)
                         TextField("Classe do personagem", text: $fichaViewModel.classe)
                             .padding(13)

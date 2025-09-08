@@ -9,51 +9,97 @@ import Foundation
 import SwiftData
 
 class FichasViewModel: ObservableObject {
+    private(set) var id: UUID?
     @Published var fichas: [FichaModel] =  []
-    var nome: String = ""
-    var descricao: String = ""
-    var classe: String = ""
-    var raça: String = ""
-    var elemento: String = ""
-    var itens: [String] = []
-    var avatar: Data?
-    var level: Int = 0
-    var vida: Int = 0
-    var ataque: Int = 0
-    var defesa: Int = 0
-    var mana: Int = 0
-    var velocidade: Int = 0
+    @Published var nome: String = ""
+    @Published var descricao: String = ""
+    @Published var classe: String = ""
+    @Published var raca: String = ""
+    @Published var elemento: String = ""
+    @Published var itens: [String] = []
+    @Published var avatar: Data?
+    @Published var level: Int = 0
+    @Published var vida: Int = 0
+    @Published var ataque: Int = 0
+    @Published var defesa: Int = 0
+    @Published  var mana: Int = 0
+    @Published var velocidade: Int = 0
     
     static let shared = FichasViewModel()
 
     private init(){}
     
-    func addFicha() {
-        let ficha = FichaModel(nome: self.nome, descricao: self.descricao, classe: self.classe, raça: self.raça, elemento: self.elemento, itens: self.itens, avatar: self.avatar!, level: self.level, vida: self.vida, ataque: self.ataque, defesa: self.defesa, mana: self.mana, velocidade: self.velocidade)
-        self.fichas.append(ficha)
+    func addFicha(context: ModelContext) {
+        let ficha = FichaModel(nome: self.nome, descricao: self.descricao, classe: self.classe, raca: self.raca, elemento: self.elemento, itens: self.itens, avatar: self.avatar, level: self.level, vida: self.vida, ataque: self.ataque, defesa: self.defesa, mana: self.mana, velocidade: self.velocidade)
+        print("Função chamada")
+        context.insert(ficha)
+        
+        do {
+            try context.save()
+            print("Ficha criada com sucesso!")
+        } catch {
+            print("Error em cria a ficha: \(error)")
+        }
     }
     
-    func removeFicha(at index: Int) {
-        self.fichas.remove(at: index)
+    func removeFicha(ficha: FichaModel, context: ModelContext) {
+        self.fichas.removeAll {$0.id == ficha.id}
+        
+        context.delete(ficha)
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error em deletar a ficha: \(error)")
+        }
     }
     
-    func updateFicha(at index: Int) {
-        self.fichas[index] = FichaModel(nome: self.nome, descricao: self.descricao, classe: self.classe, raça: self.raça, elemento: self.elemento, itens: self.itens, avatar: self.avatar!, level: self.level, vida: self.vida, ataque: self.ataque, defesa: self.defesa, mana: self.mana, velocidade: self.velocidade)
+    func updateFicha(context: ModelContext) {
+        guard let id else { return }
+                
+            let descriptor = FetchDescriptor<FichaModel>(
+                predicate: #Predicate { $0.id == id }
+            )
+            
+            if let ficha = try? context.fetch(descriptor).first {
+                ficha.nome = self.nome
+                ficha.descricao = self.descricao
+                ficha.classe = self.classe
+                ficha.raca = self.raca
+                ficha.elemento = self.elemento
+                ficha.itens = self.itens
+                ficha.avatar = self.avatar
+                ficha.level = self.level
+                ficha.vida = self.vida
+                ficha.ataque = self.ataque
+                ficha.defesa = self.defesa
+                ficha.velocidade = self.velocidade
+                do {
+                    try context.save()
+                } catch {
+                    print("Error em editar a ficha: \(error)")
+                }
+            }
     }
     
-    func getAllFichas() -> [FichaModel] {
-        return self.fichas
-    }
-    
-    func getFicha(at index: Int) -> FichaModel {
-        return self.fichas[index]
+    func getAllFichas(context: ModelContext){
+        let descriptor = FetchDescriptor<FichaModel>()
+        do {
+            self.fichas = try context.fetch(descriptor)
+        } catch {
+            print("Erro ao buscar as fichas: \(error)")
+        }
+        
+        
+  
     }
     
     func clearFicha() {
+        self.id = nil
         self.nome = ""
         self.descricao = ""
         self.classe = ""
-        self.raça = ""
+        self.raca = ""
         self.elemento = ""
         self.itens = []
         self.avatar = nil
@@ -67,10 +113,11 @@ class FichasViewModel: ObservableObject {
     }
     
     func filltoEdit(ficha: FichaModel) {
+        self.id = ficha.id
         self.nome = ficha.nome
         self.descricao = ficha.descricao
         self.classe = ficha.classe
-        self.raça = ficha.raça
+        self.raca = ficha.raca
         self.elemento = ficha.elemento
         self.itens = ficha.itens
         self.avatar = ficha.avatar

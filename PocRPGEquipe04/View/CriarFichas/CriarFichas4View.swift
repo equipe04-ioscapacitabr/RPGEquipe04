@@ -9,6 +9,8 @@ import SwiftUI
 import _PhotosUI_SwiftUI
 
 struct CriarFichas4View: View {
+    @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
     @State private var avatarSelecionado: PhotosPickerItem?
     @ObservedObject var fichaViewModel = FichasViewModel.shared
     
@@ -48,10 +50,6 @@ struct CriarFichas4View: View {
                                 .padding(13)
                                 .padding(.leading, 0)
                                 .foregroundStyle(.blue)
-                            Image(systemName: "upload")
-                                .foregroundColor(.blue)
-                                .font(.system(size: 20, weight: .bold))
-                                .padding(10)
                         }
                         
                         
@@ -80,16 +78,22 @@ struct CriarFichas4View: View {
             NavigationLink(destination: MinhasFichasView(), label: {
                 HStack {
                     Spacer()
-                    
                     Text("Salvar")
                         .font(.headline)
-                    
                     Spacer()
+                    
                 }
                 .padding()
                 .background(Color.blue)
                 .cornerRadius(10)
+                
             })
+            .onTapGesture {
+                
+                fichaViewModel.addFicha(context: context)
+                fichaViewModel.clearFicha()
+                fichaViewModel.getAllFichas(context: context)
+            }
             .buttonStyle(PlainButtonStyle())
         }
         .padding()
@@ -101,10 +105,6 @@ struct CriarFichas4View: View {
                     fichaViewModel.avatar = data
                 }
             }
-        }
-        .onDisappear {
-            fichaViewModel.addFicha()
-            fichaViewModel.clearFicha()
         }
     }
 }

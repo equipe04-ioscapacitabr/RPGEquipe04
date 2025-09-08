@@ -9,11 +9,11 @@ import SwiftUI
 import _PhotosUI_SwiftUI
 
 struct EditarFichas4View: View {
+    @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
+    @State private var avatarSelecionado: PhotosPickerItem?
     @ObservedObject var fichaViewModel = FichasViewModel.shared
-    @State var avatarSelecionado: PhotosPickerItem?
     
-    
-    @ObservedObject var FichaViewModel = FichasViewModel.shared
     var body: some View {
         VStack {
             VStack(alignment: .center, spacing: 16) {
@@ -31,9 +31,8 @@ struct EditarFichas4View: View {
                 .padding(.top, 10)
                 
             }
-            
-            
-            VStack(alignment: .leading, spacing: 16) {
+
+            VStack(alignment: .leading, spacing: 16){
                 Text("História")
                     .font(.headline)
                     .foregroundColor(.white)
@@ -78,25 +77,32 @@ struct EditarFichas4View: View {
                 .foregroundColor(.white)
             }
             Spacer()
-            
+
             NavigationLink(destination: MinhasFichasView(), label: {
                 HStack {
-                    Spacer()
                     
-                    Text("Salvar")
-                        .font(.headline)
                     
-                    Spacer()
-                }
+                    Button(action: {
+                        fichaViewModel.updateFicha(context: context)
+                        fichaViewModel.clearFicha()
+                        fichaViewModel.getAllFichas(context: context)
+                        dismiss()
+                    }) {
+                        Spacer()
+                        Text("Salvar")
+                            .font(.headline)
+                        Spacer()
+                    }
                 .padding()
                 .background(Color.blue)
                 .cornerRadius(10)
+                
+            }
             })
             .buttonStyle(PlainButtonStyle())
+               
         }
         .padding()
-        .preferredColorScheme(.dark)
-        .navigationTitle("Editar Ficha")
         .onChange(of: avatarSelecionado) { _, novoValor in
             Task {
                 if let data = try? await novoValor?.loadTransferable(type: Data.self) {
@@ -104,9 +110,8 @@ struct EditarFichas4View: View {
                 }
             }
         }
-        .onDisappear {
-            FichaViewModel.updateFicha(at: 1)
-        }
+        .preferredColorScheme(.dark)        .navigationTitle("Editar Ficha")
+               
     }
 }
 

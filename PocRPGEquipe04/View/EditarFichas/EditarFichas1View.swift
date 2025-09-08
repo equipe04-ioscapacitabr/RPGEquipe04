@@ -47,7 +47,7 @@ struct EditarFicha1View: View {
                     VStack (alignment: .trailing) {
                         TextField("Nome do personagem", text: $fichaViewModel.nome)
                             .padding(13)
-                        TextField("Raça do personagem", text: $fichaViewModel.raça)
+                        TextField("Raça do personagem", text: $fichaViewModel.raca)
                             .padding(13)
                         TextField("Classe do personagem", text: $fichaViewModel.classe)
                             .padding(13)
@@ -90,7 +90,7 @@ struct EditarFicha1View: View {
 }
 
 struct EditarFichaView_Previews: PreviewProvider {
-    @State static var fichapreview = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raça: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
+    @State static var fichapreview = FichaModel( nome: "Daniel", descricao: "aaa", classe: "Guerreiro", raca: "Elfo", elemento: "Fogo", itens: ["Espada"], avatar: nil, level: 0, vida: 100, ataque: 0, defesa: 0, mana: 0, velocidade: 0)
     static var previews: some View {
         EditarFicha1View(ficha: $fichapreview)
     }
